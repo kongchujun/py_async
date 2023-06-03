@@ -1,1 +1,57 @@
+# 忽略 Python 编译产生的文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 忽略日志文件
+*.log
+
+# 忽略临时文件
+*.swp
+*.swo
+*.tmp
+
+# 忽略编辑器和集成开发环境相关文件
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 忽略依赖管理工具生成的文件和文件夹
 venv/
+env/
+env.bak/
+pipenv/
+poetry.lock
+
+# 忽略生成的文件和文件夹
+build/
+dist/
+*.egg-info/
+
+# 忽略一些敏感的配置文件
+config.ini
+secrets.ini
+
+# 忽略项目文档
+docs/
+
+# 忽略缓存文件
+.cache/
+.cached/
+
+# 忽略数据库文件
+*.db
+*.sqlite
+
+# 忽略一些 IDE 和编辑器的配置文件
+.project
+.settings/
+.terraform/
+*.sublime-*
+*.sw*
+*.komodoproject
+Thumbs.db
+Desktop.ini
