@@ -54,3 +54,22 @@ def setGauge(name, labels, value, time=None):
   g.set(value)
   if time is not None:
     g.set_time(time)
+
+是的,我在互联网上搜索找到了一些类似 prometheus_flask.py 中实现的 Prometheus 指标收集代码。
+
+Prometheus client Python 库的示例
+Prometheus 的 Python 客户端库 prometheus_client 提供了一些示例代码,展示了如何实现 counter、gauge 等指标的创建和更新,以及公开 metrics 接口的方法,与 prometheus_flask.py 中的实现类似。
+
+链接:https://github.com/prometheus/client_python#counter
+
+Flask + Prometheus 集成示例
+这个项目给出了在 Flask 中集成 Prometheus 的完整示例,实现了指标定义,以及利用 decorator 收集指标的方法,主要思路与 prometheus_flask.py 一致。
+
+链接:https://github.com/rytilahti/python-flask-prometheus-example
+
+Prometheus Client 模块
+Prometheus Client 模块也提供了类似的 Python 接口,可用于创建 counter、gauge 等指标对象,并在视图函数中更新,最后公开 metrics。
+
+链接:https://pypi.org/project/prometheus-client/
+
+综上所述,prometheus_flask.py 中的实现方式在很多 Prometheus 的 Python 集成示例和模块中都可以找到,属于一种标准化的模式,可以便捷地用于在 Flask 应用中收集和导出 Prometheus 指标。
