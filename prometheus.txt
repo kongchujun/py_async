@@ -1,0 +1,56 @@
+from flask import (Response)
+from prometheus_client import (Counter, CollectorRegistry, Gauge, Histogram, Summary, generate_latest, multiprocess)
+import os
+
+CONTENT_TYPE_LATEST = str('text/plain; charset=utf-8')
+
+METRICS = {}
+
+registry = CollectorRegistry()
+
+# if 'prometheus_multiproc_dir' in os.environ:
+#   multiprocess.MultiProcessCollector(registry)
+
+def setup_metrics(app):
+  @app.route('/metrics')
+  def metrics():
+    return Response(generate_latest(registry), mimetype=CONTENT_TYPE_LATEST)  
+
+def createCounter(name, description, labels={}):
+  if name not in METRICS:
+    c = Counter(name, description, labelnames=labels, registry=registry)
+    METRICS[name] = c
+  return METRICS[name]
+
+def incCounter(name, labels={}, value=1):
+  labelnames = labels.keys() if labels is not None else None
+  c = createCounter(name, name, labels=labelnames)
+  if labels is not None:
+    c.labels(**labels).inc(value)
+  else:
+    c.inc(value)
+
+def createSummary(name, description):
+  if name not in METRICS:
+    s = Summary(name, description, registry=registry)
+    METRICS[name] = s
+  return METRICS[name]
+
+def createHistogram(name, description):
+  if name not in METRICS:
+    s = Histogram(name, description, registry=registry)
+    METRICS[name] = s
+  return METRICS[name]
+
+def createGauge(name, description):
+  if name not in METRICS:
+    s = Gauge(name, description, registry=registry)
+    METRICS[name] = s
+  return METRICS[name]
+
+def setGauge(name, labels, value, time=None):
+  labelnames = labels.keys()
+  g = createGauge(name, name, labels=labelnames)
+  g.set(value)
+  if time is not None:
+    g.set_time(time)
